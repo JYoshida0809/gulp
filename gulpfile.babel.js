@@ -79,8 +79,7 @@ gulp.task('watch', () => {
 // serve
 gulp.task('serve', ['watch'], () => {
   browserSync({
-    proxy: paths.url,
-    reloadDelay: 250
+    proxy: paths.url
   });
   // gulp-watch
   return watch([paths.php,paths.css,paths.es,paths.js]).on('change', browserSync.reload);
