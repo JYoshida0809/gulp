@@ -5,13 +5,14 @@
 // paths
 const root = './www/';
 const paths = {
-  url: 'http://gulp.dev/', // !要変更
+  url: 'http://gulp.dev/', // !!!要変更
   base: root,
   scss: root + '**/*.scss',
   css: root + '**/*.css',
   js : root + '**/*.js',
   es : root + '**/*.es.js',
-  php : root + '**/*.php'
+  php : root + '**/*.php',
+  img : root + '**/*.+(jpg|png|gif|svg)'
 }
 
 // import
@@ -27,8 +28,8 @@ import babel from 'gulp-babel'; // ES2016に変換
 import rename from 'gulp-rename'; // リネーム
 import replace from 'gulp-replace'; // 置換
 import frontNote from 'gulp-frontnote'; // スタイル集作成
+import imagemin from 'gulp-imagemin'; // 画像圧縮
 //import sourcemaps from 'gulp-sourcemaps'; // ソースマップ作成
-
 
 // sass
 gulp.task('sass', () => {
@@ -36,13 +37,12 @@ gulp.task('sass', () => {
     .pipe(cache('sass'))
     .pipe(progeny())
     .pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
-    // .pipe(sourcemaps.init())
+    // .pipe(sourcemaps.init()) // ソースマップ作成
     .pipe(sass({precision:10}).on('error',sass.logError))
-    // .pipe(sourcemaps.write('.'))
+    // .pipe(sourcemaps.write('.')) // ソースマップ作成
     .pipe(gulp.dest('dist'))
     .pipe(notify({title:'Compiled'}));
 });
-
 
 // js
 gulp.task('js', () => {
@@ -55,8 +55,7 @@ gulp.task('js', () => {
     .pipe(gulp.dest('dist'))
 });
 
-
-// note
+// frontNote
 gulp.task('note', () => {
   gulp.src(paths.scss,{base: 'src'})
   .pipe(frontNote({
@@ -64,17 +63,23 @@ gulp.task('note', () => {
   }))
 });
 
+// imagemin
+gulp.task('imagemin', () => {
+  gulp.src(paths.img,{base: 'src'})
+    .pipe(imagemin({
+      progressive: true
+    }))
+    .pipe(gulp.dest('dist'));
+});
 
 // build
 gulp.task('build', ['sass']);
-
 
 // watch
 gulp.task('watch', () => {
   gulp.watch(paths.scss, ['sass']);
   gulp.watch(paths.es, ['js']);
 });
-
 
 // serve
 gulp.task('serve', ['watch'], () => {
@@ -84,7 +89,6 @@ gulp.task('serve', ['watch'], () => {
   // gulp-watch
   return watch([paths.php,paths.css,paths.es,paths.js]).on('change', browserSync.reload);
 });
-
 
 // default
 gulp.task('default', ['serve']);

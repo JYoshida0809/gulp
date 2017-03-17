@@ -1,6 +1,6 @@
 # gulp 
 
-- babel + ES2016
+- babel + ES6
 - browserSync
 - sass
 - cache
@@ -11,25 +11,25 @@
 - rename
 - replace
 - frontNote
+- imagemin
+
 
 ## tasks
 
-- `gulp sass`
-- `gulp js`
-- `gulp note`
-- `gulp build`
-- `gulp watch`
-- `gulp serve`
+- `gulp` : 起動
+- `gulp sass` : scssコンパイル
+- `gulp js` : ES6からES5にトランスコンパイル
+- `gulp note` : スタイルガイドを生成
+- `gulp imagemin` : 画像圧縮
 
-## flow
+
+## memo
 - 20170213 : ES2016を使用出来るように修正（JSのファイル名は「~.es.js」）、frontnote（style集）導入
 - 20170313 : 新規ファイルを追加しても、エラーで止まらないように修正（gulp.watch → gulp-watch に変更）
+- 20170316 : 画像圧縮のタスクを追加
 
 (1) package.jsonを作成  
 `npm init -y`
 
 (2) プラグインをインストール  
-`npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 gulp-sass gulp-cached gulp-notify gulp-plumber gulp-progeny gulp-babel gulp-rename gulp-replace gulp-frontnote gulp-watch`
-
-(*)  
-・スタイル集はターミナルのコマンドで生成 → gulp note　（階層：/www/!styleguide/）
+`npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 gulp-sass gulp-cached gulp-notify gulp-plumber gulp-progeny gulp-babel gulp-rename gulp-replace gulp-frontnote gulp-watch gulp-imagemin`
