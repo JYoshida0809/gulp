@@ -28,8 +28,10 @@
 - 20170313 : 新規ファイルを追加しても、エラーで止まらないように修正（gulp.watch → gulp-watch に変更）
 - 20170316 : 画像圧縮のタスクを追加
 
-(1) package.jsonを作成  
+(1) .babelrc/gulpfile.babel.jsを対象ディレクトリにコピー
+
+(2) package.jsonを作成  
 `npm init -y`
 
-(2) プラグインをインストール  
+(3) プラグインをインストール  
 `npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 gulp-sass gulp-cached gulp-notify gulp-plumber gulp-progeny gulp-babel gulp-rename gulp-replace gulp-frontnote gulp-watch gulp-imagemin`
