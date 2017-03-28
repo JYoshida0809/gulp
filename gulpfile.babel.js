@@ -12,6 +12,7 @@ const paths = {
   js : root + '**/*.js',
   es : root + '**/*.es.js',
   php : root + '**/*.php',
+  html : root + '**/*.html',
   img : root + '**/*.+(jpg|png|gif|svg)'
 }
 
@@ -77,8 +78,14 @@ gulp.task('build', ['sass']);
 
 // watch
 gulp.task('watch', () => {
-  gulp.watch(paths.scss, ['sass']);
-  gulp.watch(paths.es, ['js']);
+  // css
+  watch(paths.scss, () => {
+    gulp.start(['sass']);
+  });
+  // js
+  watch(paths.es, () => {
+    gulp.start(['js']);
+  });
 });
 
 // serve
@@ -87,7 +94,7 @@ gulp.task('serve', ['watch'], () => {
     proxy: paths.url
   });
   // gulp-watch
-  return watch([paths.php,paths.css,paths.es,paths.js]).on('change', browserSync.reload);
+  return watch([paths.php,paths.html,paths.css,paths.es,paths.js]).on('change', browserSync.reload);
 });
 
 // default
