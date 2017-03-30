@@ -71,12 +71,14 @@ gulp.task('imagemin', () => {
   //jpg
   gulp.src(paths.jpg,{base: 'src'})
     .pipe(imagemin([imageminGuetzli()]))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist'))
+    .pipe(notify({title:'imagemin task complete.'}));
 
   //png,gif,svg
   gulp.src(paths.img,{base: 'src'})
     .pipe(imagemin())
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist'))
+    .pipe(notify({title:'imagemin task complete.'}));
 });
 
 // build
