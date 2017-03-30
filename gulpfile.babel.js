@@ -13,7 +13,8 @@ const paths = {
   es : root + '**/*.es.js',
   php : root + '**/*.php',
   html : root + '**/*.html',
-  img : root + '**/*.+(jpg|png|gif|svg)'
+  img : root + '**/*.+(png|gif|svg)',
+  jpg : root + '**/*.jpg'
 }
 
 // import
@@ -30,6 +31,7 @@ import rename from 'gulp-rename'; // リネーム
 import replace from 'gulp-replace'; // 置換
 import frontNote from 'gulp-frontnote'; // スタイル集作成
 import imagemin from 'gulp-imagemin'; // 画像圧縮
+import imageminGuetzli from 'imagemin-guetzli'; // jpg圧縮
 //import sourcemaps from 'gulp-sourcemaps'; // ソースマップ作成
 
 // sass
@@ -66,10 +68,14 @@ gulp.task('note', () => {
 
 // imagemin
 gulp.task('imagemin', () => {
+  //jpg
+  gulp.src(paths.jpg,{base: 'src'})
+    .pipe(imagemin([imageminGuetzli()]))
+    .pipe(gulp.dest('dist'));
+
+  //png,gif,svg
   gulp.src(paths.img,{base: 'src'})
-    .pipe(imagemin({
-      progressive: true
-    }))
+    .pipe(imagemin())
     .pipe(gulp.dest('dist'));
 });
 
