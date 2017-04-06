@@ -81,6 +81,21 @@ gulp.task('imagemin', () => {
     .pipe(notify({title:'imagemin task complete.'}));
 });
 
+// copy
+gulp.task('copy', () => {
+  return gulp.src(
+    [paths.all,
+      '!./www/**/!*', // !
+      '!./www/**/.*', // .
+      '!./www/_*/**/*.*', // _
+      '!./www/**/*.scss', // .scss
+      '!./www/**/*.es.js', // .es
+      '!./www/*.+(jpg|png|gif|svg)'],
+    {base: root}
+  )
+  .pipe(gulp.dest('html'));
+});
+
 // build
 gulp.task('build', ['sass']);
 
