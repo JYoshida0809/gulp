@@ -13,8 +13,10 @@ const paths = {
   es : root + '**/*.es.js',
   php : root + '**/*.php',
   html : root + '**/*.html',
+  pug : root + '**/*.pug',
   img : root + '**/*.+(png|gif|svg)',
-  jpg : root + '**/*.jpg'
+  jpg : root + '**/*.jpg',
+  all : root + '**/*'
 }
 
 // import
@@ -32,6 +34,7 @@ import replace from 'gulp-replace'; // 置換
 import frontNote from 'gulp-frontnote'; // スタイル集作成
 import imagemin from 'gulp-imagemin'; // 画像圧縮
 import imageminGuetzli from 'imagemin-guetzli'; // jpg圧縮
+import pug from 'gulp-pug'; // pug
 //import sourcemaps from 'gulp-sourcemaps'; // ソースマップ作成
 
 // sass
@@ -55,6 +58,16 @@ gulp.task('js', () => {
     .pipe(rename( (path) =>
       path.basename = path.basename.replace('.es','')
     ))
+    .pipe(gulp.dest('dist'))
+});
+
+// pug
+gulp.task("pug", () => {
+  gulp.src(paths.pug,{base: 'src'})
+    .pipe(plumber({
+      errorHandler: notify.onError("Error: <%= error.message %>")
+    }))
+    .pipe(pug({pretty: true}))
     .pipe(gulp.dest('dist'))
 });
 
@@ -85,15 +98,16 @@ gulp.task('imagemin', () => {
 gulp.task('copy', () => {
   return gulp.src(
     [paths.all,
-      '!./www/**/!*', // !
-      '!./www/**/.*', // .
-      '!./www/_*/**/*.*', // _
-      '!./www/**/*.scss', // .scss
-      '!./www/**/*.es.js', // .es
-      '!./www/*.+(jpg|png|gif|svg)'],
-    {base: root}
-  )
-  .pipe(gulp.dest('html'));
+      '!./www/**/!*',
+      '!./www/**/.*',
+      '!./www/_*/**/*.*',
+      '!./www/**/*.scss',
+      '!./www/**/*.pug',
+      '!./www/**/*.es.js'
+    ],{
+      base: './www/'
+    })
+    .pipe(gulp.dest('html'));
 });
 
 // build
@@ -109,6 +123,10 @@ gulp.task('watch', () => {
   watch(paths.es, () => {
     gulp.start(['js']);
   });
+  // pug
+  watch(paths.pug, () => {
+    gulp.start(['pug']);
+  });
 });
 
 // serve
@@ -117,7 +135,14 @@ gulp.task('serve', ['watch'], () => {
     proxy: paths.url
   });
   // gulp-watch
-  return watch([paths.php,paths.html,paths.css,paths.es,paths.js]).on('change', browserSync.reload);
+  return watch([
+    paths.php,
+    paths.html,
+    paths.pug,
+    paths.css,
+    paths.es,
+    paths.js
+  ]).on('change', browserSync.reload);
 });
 
 // default
