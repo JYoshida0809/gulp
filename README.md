@@ -35,7 +35,7 @@
 - 20170330 : JPG圧縮にGuetzliを使用
 - 20170406 : copy（納品ファイル作成）タスクを追加
 - 20170411 : pugタスクを追加
-- 20170411 : Png圧縮にpngquantを使用
+- 20170421 : Png圧縮にpngquantを使用
 
 (1)` .babelrc`/`gulpfile.babel.js`を対象ディレクトリにコピー
 
