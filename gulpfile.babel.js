@@ -85,6 +85,7 @@ gulp.task('note', () => {
 gulp.task('imagemin', () => {
   //jpg
   gulp.src(paths.jpg,{base: 'src'})
+    .pipe(plumber())
     .pipe(imagemin([imageminGuetzli()]))
     .pipe(gulp.dest('dist'))
     .pipe(notify({title:'imagemin task complete.'}));
