@@ -14,6 +14,7 @@
 - frontNote
 - imagemin
 - imageminGuetzlis
+- pngquant
 
 
 ## tasks
@@ -34,6 +35,7 @@
 - 20170330 : JPG圧縮にGuetzliを使用
 - 20170406 : copy（納品ファイル作成）タスクを追加
 - 20170411 : pugタスクを追加
+- 20170411 : Png圧縮にpngquantを使用
 
 (1)` .babelrc`/`gulpfile.babel.js`を対象ディレクトリにコピー
 
@@ -42,7 +44,7 @@
 
 (3) プラグインをインストール
 ```
-npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 gulp-sass gulp-pug gulp-cached gulp-notify gulp-plumber gulp-progeny gulp-babel gulp-rename gulp-replace gulp-frontnote gulp-watch gulp-imagemin imagemin-guetzli
+npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 gulp-sass gulp-pug gulp-cached gulp-notify gulp-plumber gulp-progeny gulp-babel gulp-rename gulp-replace gulp-frontnote gulp-watch gulp-imagemin imagemin-guetzli imagemin-pngquant
 ```
 
 (4) `gulpfile.babel.js`内のルートパスを変更

@@ -14,8 +14,9 @@ const paths = {
   php : root + '**/*.php',
   html : root + '**/*.html',
   pug : root + '**/*.pug',
-  img : root + '**/*.+(png|gif|svg)',
+  img : root + '**/*.+(gif|svg)',
   jpg : root + '**/*.jpg',
+  png : root + '**/*.png',
   all : root + '**/*'
 }
 
@@ -34,6 +35,7 @@ import replace from 'gulp-replace'; // 置換
 import frontNote from 'gulp-frontnote'; // スタイル集作成
 import imagemin from 'gulp-imagemin'; // 画像圧縮
 import imageminGuetzli from 'imagemin-guetzli'; // jpg圧縮
+import pngquant from 'imagemin-pngquant'; // png圧縮
 import pug from 'gulp-pug'; // pug
 //import sourcemaps from 'gulp-sourcemaps'; // ソースマップ作成
 
@@ -87,7 +89,19 @@ gulp.task('imagemin', () => {
     .pipe(gulp.dest('dist'))
     .pipe(notify({title:'imagemin task complete.'}));
 
-  //png,gif,svg
+  //png
+  gulp.src(paths.png,{base: 'src'})
+    .pipe(imagemin(
+      [pngquant({
+        quality: '60-80',
+        speed: 1
+      })]
+    ))
+    .pipe(imagemin())
+    .pipe(gulp.dest('dist'))
+    .pipe(notify({title:'imagemin task complete.'}));
+
+  //gif,svg
   gulp.src(paths.img,{base: 'src'})
     .pipe(imagemin())
     .pipe(gulp.dest('dist'))
