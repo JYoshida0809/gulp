@@ -12,9 +12,7 @@
 - rename
 - replace
 - frontNote
-- imagemin
-- imageminGuetzlis
-- pngquant
+- image
 
 
 ## tasks
@@ -24,7 +22,7 @@
 - `gulp js` : ES6 → ES5にトランスコンパイル
 - `gulp pug` : pug → htmlにコンパイル
 - `gulp note` : スタイルガイドを生成
-- `gulp imagemin` : 画像圧縮
+- `gulp image` : 画像圧縮
 - `gulp copy` : ルートと同階層に納品ファイル作成
 
 
@@ -36,6 +34,7 @@
 - 20170406 : copy（納品ファイル作成）タスクを追加
 - 20170411 : pugタスクを追加
 - 20170421 : Png圧縮にpngquantを使用
+- 20170515 : 画像圧縮のプラグインを変更
 
 (1)` .babelrc`/`gulpfile.babel.js`を対象ディレクトリにコピー
 
@@ -44,7 +43,7 @@
 
 (3) プラグインをインストール
 ```
-npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 gulp-sass gulp-pug gulp-cached gulp-notify gulp-plumber gulp-progeny gulp-babel gulp-rename gulp-replace gulp-frontnote gulp-watch gulp-imagemin imagemin-guetzli imagemin-pngquant
+npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 gulp-sass gulp-pug gulp-cached gulp-notify gulp-plumber gulp-progeny gulp-babel gulp-rename gulp-replace gulp-frontnote gulp-watch gulp-image
 ```
 
 (4) `gulpfile.babel.js`内のルートパスを変更

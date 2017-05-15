@@ -14,9 +14,7 @@ const paths = {
   php : root + '**/*.php',
   html : root + '**/*.html',
   pug : root + '**/*.pug',
-  img : root + '**/*.+(gif|svg)',
-  jpg : root + '**/*.jpg',
-  png : root + '**/*.png',
+  img : root + '**/*.+(jpg|png|gif|svg)',
   all : root + '**/*'
 }
 
@@ -33,9 +31,7 @@ import babel from 'gulp-babel'; // ES2016に変換
 import rename from 'gulp-rename'; // リネーム
 import replace from 'gulp-replace'; // 置換
 import frontNote from 'gulp-frontnote'; // スタイル集作成
-import imagemin from 'gulp-imagemin'; // 画像圧縮
-import imageminGuetzli from 'imagemin-guetzli'; // jpg圧縮
-import pngquant from 'imagemin-pngquant'; // png圧縮
+import image from 'gulp-image'; // 画像圧縮
 import pug from 'gulp-pug'; // pug
 //import sourcemaps from 'gulp-sourcemaps'; // ソースマップ作成
 
@@ -81,32 +77,26 @@ gulp.task('note', () => {
   }))
 });
 
-// imagemin
-gulp.task('imagemin', () => {
-  //jpg
-  gulp.src(paths.jpg,{base: 'src'})
-    .pipe(plumber())
-    .pipe(imagemin([imageminGuetzli()]))
-    .pipe(gulp.dest('dist'))
-    .pipe(notify({title:'imagemin task complete.'}));
+// image
+gulp.task('image', () => {
 
-  //png
-  gulp.src(paths.png,{base: 'src'})
-    .pipe(imagemin(
-      [pngquant({
-        quality: '60-80',
-        speed: 1
-      })]
-    ))
-    .pipe(imagemin())
-    .pipe(gulp.dest('dist'))
-    .pipe(notify({title:'imagemin task complete.'}));
-
-  //gif,svg
   gulp.src(paths.img,{base: 'src'})
-    .pipe(imagemin())
-    .pipe(gulp.dest('dist'))
-    .pipe(notify({title:'imagemin task complete.'}));
+    .pipe(plumber({
+      errorHandler: notify.onError("Error: <%= error.message %>")
+    }))
+    .pipe(image({
+      pngquant: true,
+      optipng: true,
+      zopflipng: false,
+      jpegRecompress: false,
+      jpegoptim: false,
+      mozjpeg: false,
+      guetzli: true,
+      gifsicle: true,
+      svgo: true,
+      concurrent: 10
+    }))
+    .pipe(gulp.dest('dist'));
 });
 
 // copy
