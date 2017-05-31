@@ -50,4 +50,4 @@ npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 gulp-sa
 
 (4) `gulpfile.babel.js`内のルートパスを変更
 
-(★) ソースマップ作成・cssminに関してはコメントアウトを外す事で使用可能
+(★) ソースマップ作成・cssminに関しては、コメントアウトを外す事で使用可能
