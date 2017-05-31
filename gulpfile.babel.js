@@ -92,6 +92,9 @@ gulp.task("pug", () => {
       errorHandler: notify.onError("Error: <%= error.message %>")
     }))
     .pipe(pug({pretty: true}))
+    .pipe(rename({
+      extname: '.php'
+    }))
     .pipe(gulp.dest('dist'))
 });
 
