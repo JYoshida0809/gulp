@@ -5,7 +5,7 @@
 // paths
 const root = './www/';
 const paths = {
-  url: 'http://gulp.dev/', // !!!要変更
+  url: 'http://gulp.dev/', // !!!環境に応じて変更!!!
   base: root,
   scss: root + '**/*.scss',
   css: root + '**/*.css',
@@ -18,22 +18,42 @@ const paths = {
   all : root + '**/*'
 }
 
+// postcss_browsers
+const browsers = [
+  '> 1%',
+  'last 2 version',
+  'iOS >= 10',
+  'Android >= 4.4'
+];
+
 // import
-import gulp from 'gulp'; // 本体
-import browserSync from 'browser-sync'; // ブラウザリロード
-import sass from 'gulp-sass'; // scssコンパイル
-import cache from 'gulp-cached'; // 変更ファイル抽出
-import watch from 'gulp-watch'; //追加したファイルも監視対象に
-import notify from 'gulp-notify'; // 通知
-import plumber from 'gulp-plumber'; // エラーが起きても処理を続行
+import gulp from 'gulp';
+import browserSync from 'browser-sync';
+import sass from 'gulp-sass';
+import cache from 'gulp-cached';
+import watch from 'gulp-watch';
+import notify from 'gulp-notify';
+import plumber from 'gulp-plumber';
 import progeny from 'gulp-progeny'; // ファイル依存関係を監視
-import babel from 'gulp-babel'; // ES2016に変換
-import rename from 'gulp-rename'; // リネーム
-import replace from 'gulp-replace'; // 置換
-import frontNote from 'gulp-frontnote'; // スタイル集作成
-import image from 'gulp-image'; // 画像圧縮
-import pug from 'gulp-pug'; // pug
-//import sourcemaps from 'gulp-sourcemaps'; // ソースマップ作成
+import babel from 'gulp-babel';
+import rename from 'gulp-rename';
+import replace from 'gulp-replace';
+import image from 'gulp-image';
+import pug from 'gulp-pug';
+import postcss from 'gulp-postcss';
+//import sourcemaps from 'gulp-sourcemaps';
+
+
+// fractal
+const fractal = require('./fractal.js');
+const fractalLogger = fractal.cli.console;
+const fractalServer = fractal.web.server({sync: true});
+gulp.task('fractal', () => {
+  fractalServer.on('error', err => fractalLogger.error(err.message));
+  return fractalServer.start().then(() => {
+    fractalLogger.success(`Fractal server is now running at ${fractalServer.url}`);
+  });
+});
 
 // sass
 gulp.task('sass', () => {
@@ -41,9 +61,13 @@ gulp.task('sass', () => {
     .pipe(cache('sass'))
     .pipe(progeny())
     .pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
-    // .pipe(sourcemaps.init()) // ソースマップ作成
+    // .pipe(sourcemaps.init())
     .pipe(sass({precision:10}).on('error',sass.logError))
-    // .pipe(sourcemaps.write('.')) // ソースマップ作成
+    .pipe(postcss([
+      require('autoprefixer')({browsers: browsers}),
+      require('css-mqpacker')
+    ]))
+    // .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist'))
     .pipe(notify({title:'Compiled'}));
 });
@@ -69,17 +93,8 @@ gulp.task("pug", () => {
     .pipe(gulp.dest('dist'))
 });
 
-// frontNote
-gulp.task('note', () => {
-  gulp.src(paths.scss,{base: 'src'})
-  .pipe(frontNote({
-    out: './www/!styleguide'
-  }))
-});
-
 // image
 gulp.task('image', () => {
-
   gulp.src(paths.img,{base: 'src'})
     .pipe(plumber({
       errorHandler: notify.onError("Error: <%= error.message %>")
@@ -139,6 +154,7 @@ gulp.task('serve', ['watch'], () => {
   browserSync({
     proxy: paths.url
   });
+
   // gulp-watch
   return watch([
     paths.php,
@@ -150,5 +166,6 @@ gulp.task('serve', ['watch'], () => {
   ]).on('change', browserSync.reload);
 });
 
+
 // default
-gulp.task('default', ['serve']);
+gulp.task('default', ['serve','fractal']);
