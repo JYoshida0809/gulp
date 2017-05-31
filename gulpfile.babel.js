@@ -34,13 +34,14 @@ import cache from 'gulp-cached';
 import watch from 'gulp-watch';
 import notify from 'gulp-notify';
 import plumber from 'gulp-plumber';
-import progeny from 'gulp-progeny'; // ファイル依存関係を監視
+import progeny from 'gulp-progeny';
 import babel from 'gulp-babel';
 import rename from 'gulp-rename';
 import replace from 'gulp-replace';
 import image from 'gulp-image';
 import pug from 'gulp-pug';
 import postcss from 'gulp-postcss';
+import cssmin from 'gulp-cssmin';
 //import sourcemaps from 'gulp-sourcemaps';
 
 
@@ -61,13 +62,14 @@ gulp.task('sass', () => {
     .pipe(cache('sass'))
     .pipe(progeny())
     .pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
-    // .pipe(sourcemaps.init())
+    // .pipe(sourcemaps.init())  // ソースマップ作成
     .pipe(sass({precision:10}).on('error',sass.logError))
     .pipe(postcss([
       require('autoprefixer')({browsers: browsers}),
       require('css-mqpacker')
     ]))
-    // .pipe(sourcemaps.write('.'))
+    // .pipe(cssmin()) // cssmin
+    // .pipe(sourcemaps.write('.')) // ソースマップ作成
     .pipe(gulp.dest('dist'))
     .pipe(notify({title:'Compiled'}));
 });

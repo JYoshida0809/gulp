@@ -24,7 +24,7 @@
 - `gulp pug` : pug → htmlにコンパイル
 - `gulp image` : 画像圧縮
 - `gulp copy` : ルートと同階層に納品ファイル作成
-- `fractal build` : コンポーネントガイドの静的ページ作成
+- `fractal build` : コンポーネントライブラリの静的ページ作成
 
 
 ## memo
@@ -36,7 +36,7 @@
 - 20170411 : pugタスクを追加
 - 20170421 : png圧縮にpngquantを使用
 - 20170515 : 画像圧縮のプラグインを変更
-- 20170531 : postCSS（autoprefixer,css-mqpacker）、fractalを導入
+- 20170531 : postCSS（autoprefixer,css-mqpacker）、fractal（コンポーネントライブラリ）を導入
 
 (1)` .babelrc`/`gulpfile.babel.js`/`fractal_src`/`fractal.js`を対象ディレクトリにコピー
 
@@ -45,7 +45,9 @@
 
 (3) プラグインをインストール
 ```
-npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 gulp-sass gulp-pug gulp-cached gulp-notify gulp-plumber gulp-progeny gulp-babel gulp-rename gulp-replace gulp-watch gulp-image gulp-postcss @frctl/fractal gulp-autoprefixer css-mqpacker
+npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 gulp-sass gulp-cssmin gulp-pug gulp-cached gulp-notify gulp-plumber gulp-progeny gulp-babel gulp-rename gulp-replace gulp-watch gulp-image gulp-postcss gulp-autoprefixer css-mqpacker @frctl/fractal
 ```
 
 (4) `gulpfile.babel.js`内のルートパスを変更
+
+(★) ソースマップ作成・cssminに関してはコメントアウトを外す事で使用可能
