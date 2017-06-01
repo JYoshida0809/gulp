@@ -19,5 +19,4 @@ Desktop.ini
 node_modules/
 package.json
 
-# pages
-www/common/*
+

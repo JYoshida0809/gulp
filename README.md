@@ -21,7 +21,7 @@
 - `gulp` : 起動
 - `gulp sass` : SCSSコンパイル
 - `gulp js` : ES6 → ES5にトランスコンパイル
-- `gulp pug` : pug → htmlにコンパイル
+- `gulp pug` : pug → html（php）にコンパイル
 - `gulp image` : 画像圧縮
 - `gulp copy` : ルートと同階層に納品ファイル作成
 - `fractal build` : コンポーネントライブラリの静的ページ作成
@@ -36,7 +36,7 @@
 - 20170411 : pugタスクを追加
 - 20170421 : png圧縮にpngquantを使用
 - 20170515 : 画像圧縮のプラグインを変更
-- 20170531 : postCSS（autoprefixer,css-mqpacker）、fractal（コンポーネントライブラリ）を導入
+- 20170601 : postCSS（autoprefixer,css-mqpacker）、fractal（コンポーネントライブラリ）を導入
 
 (1)` .babelrc`/`gulpfile.babel.js`/`fractal_src`/`fractal.js`を対象ディレクトリにコピー
 
@@ -50,4 +50,4 @@ npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 gulp-sa
 
 (4) `gulpfile.babel.js`内のルートパスを変更
 
-(★) ソースマップ作成・postCSS（autoprefixer,css-mqpacker）・cssminに関しては、コメントアウトを外す事で使用可能
+(★) ソースマップ作成・postCSS・cssminを使用するには、コメントアウトを外す
