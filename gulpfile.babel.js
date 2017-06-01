@@ -64,10 +64,10 @@ gulp.task('sass', () => {
     .pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
     // .pipe(sourcemaps.init())  // ソースマップ作成
     .pipe(sass({precision:10}).on('error',sass.logError))
-    .pipe(postcss([
-      require('autoprefixer')({browsers: browsers}),
-      require('css-mqpacker')
-    ]))
+    // .pipe(postcss([ // autoprefixer・css-mqpacker
+    //   require('autoprefixer')({browsers: browsers}),
+    //   require('css-mqpacker')
+    // ]))
     // .pipe(cssmin()) // cssmin
     // .pipe(sourcemaps.write('.')) // ソースマップ作成
     .pipe(gulp.dest('dist'))
