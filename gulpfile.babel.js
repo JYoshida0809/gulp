@@ -20,7 +20,7 @@ const paths = {
 
 // postcss_browsers
 const browsers = [
-  '> 1%',
+  //'> 1%',
   'last 2 version',
   'iOS >= 10',
   'Android >= 4.4'
@@ -63,7 +63,10 @@ gulp.task('sass', () => {
     .pipe(progeny())
     .pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
     // .pipe(sourcemaps.init())  // ソースマップ作成
-    .pipe(sass({precision:10}).on('error',sass.logError))
+    .pipe(sass({
+      precision:10,
+      //outputStyle: 'expanded'
+    }).on('error',sass.logError))
     // .pipe(postcss([ // autoprefixer・css-mqpacker
     //   require('autoprefixer')({browsers: browsers}),
     //   require('css-mqpacker')
