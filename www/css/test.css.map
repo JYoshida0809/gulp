@@ -1,0 +1,1 @@
+{"version":3,"file":"test.css","sources":["../www/css/test.scss"],"sourcesContent":["@charset \"UTF-8\";\n\n/**\n * Test\n */\n\n.sample{\n  font-size: 9px;\n  background: none;\n  background-color: #999;\n}\n"],"names":[],"mappings":"AAEA;;GAEG;AAEH,AAAA,OAAO,CAAA;EACL,SAAS,EAAE,GAAG;EACd,UAAU,EAAE,IAAI;EAChB,gBAAgB,EAAE,IAAI;CACvB"}

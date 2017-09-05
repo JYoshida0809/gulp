@@ -1,0 +1,1 @@
+{"version":3,"file":"style.css","sources":["../www/css/style.scss"],"sourcesContent":["@charset \"UTF-8\";\n\n/**\n * Test\n */\n\n.test{\n  color: red;\n  font-size: 10px;\n}\n"],"names":[],"mappings":"AAEA;;GAEG;AAEH,AAAA,KAAK,CAAA;EACH,KAAK,EAAE,GAAG;EACV,SAAS,EAAE,IAAI;CAChB"}

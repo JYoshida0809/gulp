@@ -5,7 +5,7 @@
 // paths
 const root = './www/';
 const paths = {
-  url: 'http://gulp.dev/', // !!!要変更!!!
+  url: 'http://gulp.dev/', // !!!環境に応じて変更!!!
   base: root,
   scss: root + '**/*.scss',
   css: root + '**/*.css',
@@ -13,12 +13,18 @@ const paths = {
   es : root + '**/*.es.js',
   php : root + '**/*.php',
   html : root + '**/*.html',
+  pug : root + '**/*.pug',
   img : root + '**/*.+(jpg|png|gif|svg)',
   all : root + '**/*'
 }
 
 // postcss_browsers
-const browsers = ['> 2%','last 2 version'];
+const browsers = [
+  //'> 1%',
+  'last 2 version',
+  'iOS >= 10',
+  'Android >= 4.4'
+];
 
 // import
 import gulp from 'gulp';
@@ -33,9 +39,11 @@ import babel from 'gulp-babel';
 import rename from 'gulp-rename';
 import replace from 'gulp-replace';
 import image from 'gulp-image';
+import pug from 'gulp-pug';
 import postcss from 'gulp-postcss';
 import cssmin from 'gulp-cssmin';
-import sourcemaps from 'gulp-sourcemaps';
+//import sourcemaps from 'gulp-sourcemaps';
+
 
 // fractal
 const fractal = require('./fractal.js');
@@ -48,39 +56,50 @@ gulp.task('fractal', () => {
   });
 });
 
-
 // sass
 gulp.task('sass', () => {
   gulp.src(paths.scss,{base: 'src'})
     .pipe(cache('sass'))
     .pipe(progeny())
     .pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
-    .pipe(sourcemaps.init())
-    .pipe(sass({precision:10 , outputStyle:'expanded'}).on('error',sass.logError))
-    // .pipe(postcss([
+    // .pipe(sourcemaps.init())  // ソースマップ作成
+    .pipe(sass({
+      precision:10,
+      //outputStyle: 'expanded'
+    }).on('error',sass.logError))
+    // .pipe(postcss([ // autoprefixer・css-mqpacker
     //   require('autoprefixer')({browsers: browsers}),
     //   require('css-mqpacker')
     // ]))
-    // .pipe(cssmin())
-    .pipe(sourcemaps.write('.'))
+    // .pipe(cssmin()) // cssmin
+    // .pipe(sourcemaps.write('.')) // ソースマップ作成
     .pipe(gulp.dest('dist'))
     .pipe(notify({title:'Compiled'}));
 });
 
-
 // js
 gulp.task('js', () => {
   gulp.src(paths.es,{base: 'src'})
-    .pipe(cache('js'))
     .pipe(plumber())
     .pipe(babel())
     .pipe(rename( (path) =>
       path.basename = path.basename.replace('.es','')
     ))
     .pipe(gulp.dest('dist'))
-    .pipe(notify({title:'Compiled'}));
 });
 
+// pug
+gulp.task("pug", () => {
+  gulp.src(paths.pug,{base: 'src'})
+    .pipe(plumber({
+      errorHandler: notify.onError("Error: <%= error.message %>")
+    }))
+    .pipe(pug({pretty: true}))
+    .pipe(rename({
+      extname: '.php'
+    }))
+    .pipe(gulp.dest('dist'))
+});
 
 // image
 gulp.task('image', () => {
@@ -103,7 +122,6 @@ gulp.task('image', () => {
     .pipe(gulp.dest('dist'));
 });
 
-
 // copy
 gulp.task('copy', () => {
   return gulp.src(
@@ -112,6 +130,7 @@ gulp.task('copy', () => {
       '!./www/**/.*',
       '!./www/_*/**/*.*',
       '!./www/**/*.scss',
+      '!./www/**/*.pug',
       '!./www/**/*.es.js'
     ],{
       base: './www/'
@@ -119,12 +138,24 @@ gulp.task('copy', () => {
     .pipe(gulp.dest('html'));
 });
 
+// build
+gulp.task('build', ['sass']);
+
 // watch
 gulp.task('watch', () => {
-  gulp.watch(paths.scss, ['sass']);
-  gulp.watch(paths.es, ['js']);
+  // css
+  watch(paths.scss, () => {
+    gulp.start(['sass']);
+  });
+  // js
+  watch(paths.es, () => {
+    gulp.start(['js']);
+  });
+  // pug
+  watch(paths.pug, () => {
+    gulp.start(['pug']);
+  });
 });
-
 
 // serve
 gulp.task('serve', ['watch'], () => {
@@ -132,18 +163,16 @@ gulp.task('serve', ['watch'], () => {
     proxy: paths.url
   });
 
-  gulp.watch([
+  // gulp-watch
+  return watch([
     paths.php,
     paths.html,
+    paths.pug,
     paths.css,
     paths.es,
     paths.js
   ]).on('change', browserSync.reload);
 });
-
-
-// build
-gulp.task('build', ['sass','js']);
 
 
 // default
