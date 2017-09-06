@@ -121,8 +121,13 @@ gulp.task('copy', () => {
 
 // watch
 gulp.task('watch', () => {
-  gulp.watch(paths.scss, ['sass']);
-  gulp.watch(paths.es, ['js']);
+  watch(paths.scss, () => {
+    gulp.start(['sass']);
+  });
+
+  watch(paths.es, () => {
+    gulp.start(['js']);
+  });
 });
 
 
