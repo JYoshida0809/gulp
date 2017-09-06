@@ -47,7 +47,8 @@
 
 (3) プラグインをインストール
 ```
-npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 gulp-sass gulp-cssmin gulp-cached gulp-notify gulp-plumber gulp-progeny gulp-babel gulp-rename gulp-replace gulp-watch gulp-image gulp-postcss gulp-sourcemaps gulp-autoprefixer css-mqpacker @frctl/fractal
+npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 gulp-sass gulp-cssmin gulp-cached gulp-notify gulp-plumber gulp-progeny gulp-babel babel-core gulp-rename gulp-replace gulp-watch gulp-image gulp-postcss gulp-sourcemaps gulp-autoprefixer css-mqpacker @frctl/fractal
+
 ```
 
 (4) `gulpfile.babel.js`内のルートパスを変更
