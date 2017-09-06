@@ -132,7 +132,7 @@ gulp.task('serve', ['watch'], () => {
     proxy: paths.url
   });
 
-  gulp.watch([
+  return watch([
     paths.php,
     paths.html,
     paths.css,
