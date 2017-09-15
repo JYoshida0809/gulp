@@ -138,6 +138,7 @@ gulp.task('serve', ['watch'], () => {
   });
 
   gulp.src(paths.scss,{base: 'src'}).pipe(cache('sass'));
+  gulp.src(paths.es,{base: 'src'}).pipe(cache('js'));
 
   return watch([
     paths.php,
