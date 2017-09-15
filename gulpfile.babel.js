@@ -137,6 +137,8 @@ gulp.task('serve', ['watch'], () => {
     proxy: paths.url
   });
 
+  gulp.src(paths.scss,{base: 'src'}).pipe(cache('sass'));
+
   return watch([
     paths.php,
     paths.html,
