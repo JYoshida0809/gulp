@@ -1,5 +1,5 @@
 // test
-$('.test').animate({opacity:0},1000);
+$('.test').animate({opacity:0},300);
 
 setTimeout(() => {
   $('.test').animate({opacity:1},130)

@@ -1,7 +1,7 @@
 'use strict';
 
 // test
-$('.test').animate({ opacity: 0 }, 1000);
+$('.test').animate({ opacity: 0 }, 300);
 
 setTimeout(function () {
   $('.test').animate({ opacity: 1 }, 130);

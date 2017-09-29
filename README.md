@@ -39,6 +39,7 @@
 - 20170515 : 画像圧縮のプラグインを変更
 - 20170601 : postCSS（autoprefixer,css-mqpacker）、fractal（コンポーネントライブラリ）を導入
 - 20170905 : pugタスクを削除、sourcemapsをデフォルトに、SassのoutputStyleをexpandedに
+- 20170929 : es.js、scssの初回コンパイル時に、全てのファイルをコンパイルしない様に修正
 
 (1)` .babelrc`/`gulpfile.babel.js`/`fractal_src`/`fractal.js`を対象ディレクトリにコピー
 

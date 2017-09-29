@@ -23,7 +23,7 @@
   text-indent: 100%;
   white-space: nowrap;
   overflow: hidden;
-  zoom: 2;
+  zoom: 1;
 }
 @mixin mq-pc {
   @media screen and (min-width: $break-small + 1) {
