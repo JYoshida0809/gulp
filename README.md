@@ -40,6 +40,7 @@
 - 20170601 : postCSS（autoprefixer,css-mqpacker）、fractal（コンポーネントライブラリ）を導入
 - 20170905 : pugタスクを削除、sourcemapsをデフォルトに、SassのoutputStyleをexpandedに
 - 20170929 : es.js、scssの初回コンパイル時に、全てのファイルをコンパイルしない様に修正
+- 20171023 : 圧縮した画像ファイルを、ルートと同階層の[img_dist]にはき出す様に変更
 
 (1)` .babelrc`/`gulpfile.babel.js`/`fractal_src`/`fractal.js`を対象ディレクトリにコピー
 
@@ -49,7 +50,7 @@
 (3) プラグインをインストール
 ```
 
-npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 babel-preset-es2017 gulp-sass gulp-cssmin gulp-cached gulp-notify gulp-plumber gulp-progeny gulp-babel babel-core gulp-rename gulp-replace gulp-watch gulp-image gulp-postcss gulp-sourcemaps gulp-autoprefixer css-mqpacker @frctl/fractal
+npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 babel-preset-es2017 gulp-sass gulp-cssmin gulp-cached gulp-changed gulp-notify gulp-plumber gulp-progeny gulp-babel babel-core gulp-rename gulp-replace gulp-watch gulp-image gulp-postcss gulp-sourcemaps gulp-autoprefixer css-mqpacker @frctl/fractal
 
 ```
 
