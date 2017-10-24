@@ -14,7 +14,7 @@ const paths = {
   php : root + '**/*.php',
   html : root + '**/*.html',
   img : root + '**/*.+(jpg|png|gif|svg)',
-  img_dist : 'img_dist',
+  img_cache : './.image-cache',
   all : root + '**/*'
 }
 
@@ -26,7 +26,7 @@ import gulp from 'gulp';
 import browserSync from 'browser-sync';
 import sass from 'gulp-sass';
 import cache from 'gulp-cached';
-import changed from 'gulp-changed';
+import assetCache from 'gulp-asset-cache';
 import watch from 'gulp-watch';
 import notify from 'gulp-notify';
 import plumber from 'gulp-plumber';
@@ -86,8 +86,8 @@ gulp.task('js', () => {
 
 // image
 gulp.task('image', () => {
-  gulp.src(paths.img)
-    .pipe(changed(paths.img_dist))
+  gulp.src(paths.img,{base: 'src'})
+    .pipe(assetCache.filter(paths.img_cache))
     .pipe(plumber({
       errorHandler: notify.onError("Error: <%= error.message %>")
     }))
@@ -103,7 +103,8 @@ gulp.task('image', () => {
       svgo: true,
       concurrent: 10
     }))
-    .pipe(gulp.dest(paths.img_dist));
+    .pipe(gulp.dest('dist'))
+    .pipe(assetCache.cache());
 });
 
 
