@@ -24,7 +24,7 @@ const paths = {
 const opt = {
   postcss : false,
   cssmin : false,
-  default: ['serve'], // fractalを使わない場合は削除
+  default: ['serve','fractal'], // fractalを使わない場合は削除
   browsers : ["> 2%","last 2 version"] // autoprefixer用の設定
 }
 
