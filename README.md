@@ -3,15 +3,6 @@
 - babel + ES6
 - browserSync
 - sass
-- ~~pug~~
-- cache
-- watch
-- notify
-- plumber
-- progeny
-- rename
-- replace
-- image
 - fractal
 - postcss
 
@@ -21,7 +12,6 @@
 - `gulp` : 起動
 - `gulp sass` : SCSSコンパイル
 - `gulp js` : ES6 → ES5にトランスコンパイル
-- ~~`gulp pug` : pug → html（php）にコンパイル~~
 - `gulp image` : 画像圧縮
 - `gulp copy` : ルートと同階層に納品ファイル作成
 - `fractal build` : コンポーネントライブラリの静的ページ作成
@@ -42,19 +32,18 @@
 - 20170929 : es.js、scssの初回コンパイル時に、全てのファイルをコンパイルしない様に修正
 - 20171023 : ~~圧縮した画像ファイルを、ルートと同階層の[img_dist]にはき出す様に変更~~
 - 20171024 : 圧縮した画像ファイルをキャッシュし、複数回圧縮が実行されない様に変更
+- 20171025 : 設定を変更しやすい様に、オプションの変数を追加
 
-(1)` .babelrc`/`gulpfile.babel.js`/`fractal_src`/`fractal.js`/`.image-cache`を対象ディレクトリにコピー
+(1)` .babelrc`/`gulpfile.babel.js`/`.image-cache`/`fractal_src`を対象ディレクトリにコピー
 
 (2) package.jsonを作成
 `npm init -y`
 
-(3) プラグインをインストール
+(3) ルートと同階層に、ターミナルからプラグインをインストール
 ```
 
-npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 babel-preset-es2017 gulp-sass gulp-cssmin gulp-cached gulp-asset-cache gulp-notify gulp-plumber gulp-progeny gulp-babel babel-core gulp-rename gulp-replace gulp-watch gulp-image gulp-postcss gulp-sourcemaps gulp-autoprefixer css-mqpacker @frctl/fractal
+npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 babel-preset-es2017 gulp-if gulp-sass gulp-cssmin gulp-cached gulp-asset-cache gulp-notify gulp-plumber gulp-progeny gulp-babel babel-core gulp-rename gulp-replace gulp-watch gulp-image gulp-postcss gulp-sourcemaps gulp-autoprefixer css-mqpacker @frctl/fractal
 
 ```
 
-(4) `gulpfile.babel.js`内のルートパスを変更
-
-(★) postCSS・cssminを使用するには、コメントアウトを削除
+(4) `gulpfile.babel.js`内のルートパス・設定を変更
