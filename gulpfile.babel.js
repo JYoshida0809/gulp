@@ -51,14 +51,14 @@ import sourcemaps from 'gulp-sourcemaps';
 
 // fractal
 const fractal = module.exports = require('@frctl/fractal').create();
-const fractalLogger = fractal.cli.console;
-const fractalServer = fractal.web.server({sync: true});
 fractal.set('project.title', 'Component Library');
 fractal.components.set('path', __dirname + '/fractal_src/components');
 fractal.docs.set('path', __dirname + '/fractal_src/docs');
 fractal.web.set('static.path', __dirname + '/www');
 fractal.web.set('builder.dest', __dirname + '/!library');
 
+const fractalLogger = fractal.cli.console;
+const fractalServer = fractal.web.server({sync: true});
 gulp.task('fractal', () => {
   fractalServer.on('error', err => fractalLogger.error(err.message));
   return fractalServer.start().then(() => {
