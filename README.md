@@ -14,7 +14,7 @@
 - `gulp js` : ES6 → ES5にトランスコンパイル
 - `gulp image` : 画像圧縮
 - `gulp copy` : ルートと同階層に納品ファイル作成
-- `fractal build` : コンポーネントライブラリの静的ページ作成
+- `gulp fractal:build` : コンポーネントライブラリの静的ページ作成
 
 
 ## memo
