@@ -138,9 +138,12 @@ gulp.task('copy', () => {
     [paths.all,
       '!./www/**/!*',
       '!./www/**/.*',
-      '!./www/_*/**/*.*',
+      '!./www/**/_*',
+      '!./www/**/_settings/*',
       '!./www/**/*.scss',
+      '!./www/**/*.map',
       '!./www/**/*.es.js'
+      '!./www/_*/**/*.*',
     ],{
       base: './www/'
     })
