@@ -145,7 +145,7 @@ gulp.task('copy', () => {
       '!./www/**/*.es.js'
       '!./www/_*/**/*.*',
     ],{
-      base: './www/'
+      base: root
     })
     .pipe(gulp.dest('html'));
 });
