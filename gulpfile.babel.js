@@ -54,11 +54,12 @@ const fractal = require('@frctl/fractal').create();
 fractal.set('project.title', 'Component Library');
 fractal.web.set('static.path', __dirname + '/www');
 fractal.web.set('builder.dest', '!library');
+fractal.web.set('server.port', 4000);
 fractal.docs.set('path', __dirname + '/fractal_src/docs');
 fractal.components.set('path', __dirname + '/fractal_src/components');
 
 const fractalLogger = fractal.cli.console;
-const fractalServer = fractal.web.server({sync: false});
+const fractalServer = fractal.web.server({sync: true});
 gulp.task('fractal', () => {
   fractalServer.on('error', err => fractalLogger.error(err.message));
   return fractalServer.start().then(() => {
