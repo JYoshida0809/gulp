@@ -7,7 +7,7 @@ const root = './www/';
 
 // paths
 const paths = {
-  url: 'http://gulp.dev/', // 要変更
+  url: 'http://gulp.test/', // 要変更
   base: root,
   scss: root + '**/*.scss',
   css: root + '**/*.css',
@@ -111,7 +111,7 @@ gulp.task('js', () => {
 
 // image
 gulp.task('image', () => {
-  gulp.src(paths.img,{base: 'src'})
+  gulp.src(paths.img)
     .pipe(assetCache.filter(paths.img_cache))
     .pipe(plumber({
       errorHandler: notify.onError("Error: <%= error.message %>")
@@ -128,7 +128,7 @@ gulp.task('image', () => {
       svgo: true,
       concurrent: 10
     }))
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('img_dist'))
     .pipe(assetCache.cache());
 });
 
@@ -143,8 +143,8 @@ gulp.task('copy', () => {
       '!./www/**/_settings/*',
       '!./www/**/*.scss',
       '!./www/**/*.map',
-      '!./www/**/*.es.js'
-      '!./www/_*/**/*.*',
+      '!./www/**/*.es.js',
+      '!./www/_*/**/*.*'
     ],{
       base: root
     })
