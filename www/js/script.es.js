@@ -6,7 +6,20 @@ setTimeout(() => {
 },1500);
 
 
-// accordion
-$('.accordion__ttl').on('click', function(){
-  $(this).stop().add($(this).next()).toggleClass('open');
-});
+class Cat {
+  constructor(name){
+    this.name = name;
+  }
+  set name(name) {
+    this._name = name;
+  }
+  get name() {
+    return this._name;
+  }
+  walk() {
+    console.log(this._name + 'が歩いてます');
+  }
+}
+
+var cat1 = new Cat('タマ');
+cat1.walk();

@@ -86,6 +86,7 @@ gulp.task('sass', () => {
     .pipe(sass({precision:10 , outputStyle:'expanded'}).on('error',sass.logError))
     .pipe(gulpif(opt.postcss ,postcss([
       require('autoprefixer')({browsers: opt.browsers}),
+      require('postcss-sort-alphabetically'),
       require('css-mqpacker')
     ])))
     .pipe(gulpif(opt.cssmin ,cssmin()))
@@ -100,7 +101,7 @@ gulp.task('js', () => {
   gulp.src(paths.es,{base: 'src'})
     .pipe(cache('js'))
     .pipe(plumber())
-    .pipe(babel())
+    .pipe(babel({presets: ['env']}))
     .pipe(rename( (path) =>
       path.basename = path.basename.replace('.es','')
     ))

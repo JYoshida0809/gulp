@@ -33,16 +33,22 @@
 - 20171023 : ~~圧縮した画像ファイルを、ルートと同階層の[img_dist]にはき出す様に変更~~
 - 20171024 : 圧縮した画像ファイルをキャッシュし、複数回圧縮が実行されない様に変更
 - 20171025 : 設定を変更しやすい様に、オプションの変数を追加
+- 20180115 : babelのトランスパイル設定を変更（env）、postCSSでコンパイル時にアルファベット順になる様に更新
 
-(1)` .babelrc`/`gulpfile.babel.js`/`.image-cache`/`fractal_src`を対象ディレクトリにコピー
+(1)` .babelrc`/`gulpfile.babel.js`/`.image-cache`/`package.json`/`fractal_src`を対象ディレクトリにコピー
 
 (2) package.jsonを作成
 `npm init -y`
 
-(3) ルートと同階層に、ターミナルからプラグインをインストール
+(3) ルートと同階層に、プラグインをインストール
+```
+npm install
+
 ```
 
-npm install -D gulp browser-sync babel-preset-es2015 babel-preset-es2016 babel-preset-es2017 gulp-if gulp-sass gulp-cssmin gulp-cached gulp-asset-cache gulp-notify gulp-plumber gulp-progeny gulp-babel babel-core gulp-rename gulp-replace gulp-watch gulp-image gulp-postcss gulp-sourcemaps gulp-autoprefixer css-mqpacker @frctl/fractal
+★更新を確認
+```
+npm update
 
 ```
 
