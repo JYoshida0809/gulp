@@ -2,9 +2,9 @@
 
 - babel + ES6
 - browserSync
-- sass
 - fractal
 - postcss
+- sass
 
 
 ## tasks
@@ -35,21 +35,16 @@
 - 20171025 : 設定を変更しやすい様に、オプションの変数を追加
 - 20180115 : babelのトランスパイル設定を変更（env）、postCSSでコンパイル時にアルファベット順になる様に更新
 
-(1)` .babelrc`/`gulpfile.babel.js`/`.image-cache`/`package.json`/`fractal_src`を対象ディレクトリにコピー
+(1)`.babelrc`/`gulpfile.babel.js`/`.image-cache`/`package.json`/`fractal_src`を対象ディレクトリにコピー
 
-(2) package.jsonを作成
-`npm init -y`
-
-(3) ルートと同階層に、プラグインをインストール
+(2) ルートと同階層に、プラグインをインストール
 ```
 npm install
-
 ```
 
 ★更新を確認
 ```
 npm update
-
 ```
 
-(4) `gulpfile.babel.js`内のルートパス・設定を変更
+(3) `gulpfile.babel.js`内のルートパス・設定を変更
