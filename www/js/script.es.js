@@ -2,8 +2,8 @@
 $('.test').animate({opacity:0},300);
 
 setTimeout(() => {
-  $('.test').animate({opacity:1},130)
-},1500);
+  $('.test').animate({opacity:1},300);
+},500);
 
 
 class Cat {
@@ -17,9 +17,9 @@ class Cat {
     return this._name;
   }
   walk() {
-    console.log(this._name + 'が歩いてます');
+    console.log(this._name + 'が歩いてますね！！');
   }
 }
 
-var cat1 = new Cat('タマ');
+var cat1 = new Cat('タマ！！！です。。');
 cat1.walk();

@@ -1,193 +1,147 @@
-/*
-  *** gulp-settings ***
-*/
+/** gulp **/
 
-// root
-const root = './www/';
-
-// paths
-const paths = {
-  url: 'http://gulp.test/', // 要変更
-  base: root,
-  scss: root + '**/*.scss',
-  css: root + '**/*.css',
-  js : root + '**/*.js',
-  es : root + '**/*.es.js',
-  php : root + '**/*.php',
-  html : root + '**/*.html',
-  img : root + '**/*.+(jpg|png|gif|svg)',
-  img_cache : './.image-cache',
-  all : root + '**/*'
-}
-
-// option
-const opt = {
-  postcss : false,
-  cssmin : false,
-  default: ['serve','fractal'], // fractalを使わない場合は削除
-  browsers : ["> 2%","last 2 version"] // autoprefixer用の設定
-}
-
-
-// import
 import gulp from 'gulp';
-import browserSync from 'browser-sync';
-import gulpif from 'gulp-if';
-import sass from 'gulp-sass';
-import cache from 'gulp-cached';
-import assetCache from 'gulp-asset-cache';
-import watch from 'gulp-watch';
-import notify from 'gulp-notify';
-import plumber from 'gulp-plumber';
-import progeny from 'gulp-progeny';
 import babel from 'gulp-babel';
+import browserSync from 'browser-sync';
+import sass from 'gulp-sass';
+import cleanCSS from 'gulp-clean-css';
+import autoprefixer from 'gulp-autoprefixer';
+import progeny from 'gulp-progeny';
+import uglify from 'gulp-uglify';
 import rename from 'gulp-rename';
-import replace from 'gulp-replace';
 import image from 'gulp-image';
-import postcss from 'gulp-postcss';
-import cssmin from 'gulp-cssmin';
-import sourcemaps from 'gulp-sourcemaps';
+import assetCache from 'gulp-asset-cache';
+import fs from 'fs';
+
+const settings = {
+  ROOT: './www/',
+  autoprefixer: {
+    browsers : ["> 2%","last 2 version"]
+  }
+}
+
+const paths = {
+  url : 'http://gulp.test/',
+  styles: {
+    src: settings.ROOT + '**/*.scss',
+    dest: 'dist'
+  },
+  scripts: {
+    src: settings.ROOT + '**/*.es.js',
+    dest: 'dist'
+  },
+  docs: {
+    src: settings.ROOT + '**/*.+(php|html)'
+  },
+  img: {
+    src: settings.ROOT + '**/*.+(jpg|png|gif|svg)',
+    cache: './.image-cache',
+    dest: 'dist_img'
+  },
+  fractal: {
+    dest: 'dist_lib',
+    port: 4000,
+  }
+}
+
+
+// styles
+function styles() {
+  return gulp.src(paths.styles.src,{base: 'src',since: gulp.lastRun(styles)})
+  .pipe(progeny())
+  .pipe(sass({precision:10 , outputStyle:'expanded'}).on('error',sass.logError))
+  .pipe(autoprefixer({browsers:autoprefixer.browsers,cascade: false}))
+  .pipe(cleanCSS())
+  .pipe(gulp.dest(paths.styles.dest))
+  .pipe(browserSync.reload({stream:true}));
+}
+
+
+// scripts
+function scripts() {
+  return gulp.src(paths.scripts.src,{base: 'src',since: gulp.lastRun(scripts)})
+    .pipe(babel())
+    .pipe(rename( (path) =>
+      path.basename = path.basename.replace('.es','')
+    ))
+    .pipe(uglify())
+    .pipe(gulp.dest(paths.scripts.dest))
+    .pipe(browserSync.reload({stream:true}));
+}
+
+
+// docs
+function docs() {
+  return gulp.src(paths.docs.src,{since: gulp.lastRun(docs)})
+    .pipe(browserSync.reload({stream:true}));
+}
+
+
+// images
+export function images() {
+  writeFile('.image-cache','');
+
+  return gulp.src(paths.img.src)
+  .pipe(assetCache.filter(paths.img.cache))
+  .pipe(image({
+    pngquant: true,
+    optipng: true,
+    zopflipng: false,
+    jpegRecompress: false,
+    jpegoptim: false,
+    mozjpeg: false,
+    guetzli: true,
+    gifsicle: true,
+    svgo: true,
+    concurrent: 10
+  }))
+  .pipe(gulp.dest(paths.img.dest))
+  .pipe(assetCache.cache());
+}
+
+function writeFile(path,data) {
+  fs.access(path, function(err) {
+    if (err) {
+      return fs.writeFile(path,data,(error) => {console.log('Error!')});
+    }
+  });
+}
 
 
 // fractal
 const fractal = require('@frctl/fractal').create();
 fractal.set('project.title', 'Component Library');
 fractal.web.set('static.path', __dirname + '/www');
-fractal.web.set('builder.dest', '!library');
-fractal.web.set('server.port', 4000);
+fractal.web.set('builder.dest', paths.fractal.dest);
+fractal.web.set('server.port', paths.fractal.port);
 fractal.docs.set('path', __dirname + '/fractal_src/docs');
 fractal.components.set('path', __dirname + '/fractal_src/components');
 
-const fractalLogger = fractal.cli.console;
-const fractalServer = fractal.web.server({sync: true});
-gulp.task('fractal', () => {
-  fractalServer.on('error', err => fractalLogger.error(err.message));
-  return fractalServer.start().then(() => {
-    fractalLogger.success(`Fractal server is now running at ${fractalServer.url}`);
-  });
-});
-gulp.task('fractal:build', function(){
+function fserve() {
+  const fractalServer = fractal.web.server({sync: true});
+  return fractalServer.start();
+}
+
+export function fbuild() {
+  const fractalLogger = fractal.cli.console;
   const builder = fractal.web.builder();
   builder.on('progress', (completed, total) => fractalLogger.update(`Exported ${completed} of ${total} items`, 'info'));
   builder.on('error', err => fractalLogger.error(err.message));
   return builder.build().then(() => {
     fractalLogger.success('Fractal build completed!');
   });
-});
-
-
-// sass
-gulp.task('sass', () => {
-  gulp.src(paths.scss,{base: 'src'})
-    .pipe(cache('sass'))
-    .pipe(progeny())
-    .pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
-    .pipe(sourcemaps.init())
-    .pipe(sass({precision:10 , outputStyle:'expanded'}).on('error',sass.logError))
-    .pipe(gulpif(opt.postcss ,postcss([
-      require('autoprefixer')({browsers: opt.browsers}),
-      require('postcss-sort-alphabetically'),
-      require('css-mqpacker')
-    ])))
-    .pipe(gulpif(opt.cssmin ,cssmin()))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('dist'))
-    .pipe(notify({title:'Compiled'}));
-});
-
-
-// js
-gulp.task('js', () => {
-  gulp.src(paths.es,{base: 'src'})
-    .pipe(cache('js'))
-    .pipe(plumber())
-    .pipe(babel({presets: ['env']}))
-    .pipe(rename( (path) =>
-      path.basename = path.basename.replace('.es','')
-    ))
-    .pipe(gulp.dest('dist'))
-    .pipe(notify({title:'Compiled'}));
-});
-
-
-// image
-gulp.task('image', () => {
-  gulp.src(paths.img)
-    .pipe(assetCache.filter(paths.img_cache))
-    .pipe(plumber({
-      errorHandler: notify.onError("Error: <%= error.message %>")
-    }))
-    .pipe(image({
-      pngquant: true,
-      optipng: true,
-      zopflipng: false,
-      jpegRecompress: false,
-      jpegoptim: false,
-      mozjpeg: false,
-      guetzli: true,
-      gifsicle: true,
-      svgo: true,
-      concurrent: 10
-    }))
-    .pipe(gulp.dest('img_dist'))
-    .pipe(assetCache.cache());
-});
-
-
-// copy
-gulp.task('copy', () => {
-  return gulp.src(
-    [paths.all,
-      '!./www/**/!*',
-      '!./www/**/.*',
-      '!./www/**/_*',
-      '!./www/**/_settings/*',
-      '!./www/**/*.scss',
-      '!./www/**/*.map',
-      '!./www/**/*.es.js',
-      '!./www/_*/**/*.*'
-    ],{
-      base: root
-    })
-    .pipe(gulp.dest('html'));
-});
-
-
-// watch
-gulp.task('watch', () => {
-  watch(paths.scss, () => {
-    gulp.start(['sass']);
-  });
-
-  watch(paths.es, () => {
-    gulp.start(['js']);
-  });
-});
+}
 
 
 // serve
-gulp.task('serve', ['watch'], () => {
-  browserSync({
-    proxy: paths.url
-  });
-
-  // cache
-  gulp.src(paths.scss,{base: 'src'}).pipe(cache('sass')).pipe(progeny());
-  gulp.src(paths.es,{base: 'src'}).pipe(cache('js'));
-
-  return watch([
-    paths.php,
-    paths.html,
-    paths.css,
-    paths.es,
-    paths.js
-  ]).on('change', browserSync.reload);
-});
+const serve = () => {
+  browserSync.init({proxy: paths.url});
+  gulp.watch(paths.styles.src, styles);
+  gulp.watch(paths.scripts.src, scripts);
+  gulp.watch(paths.docs.src, docs);
+}
 
 
 // build
-gulp.task('build', ['sass','js']);
-
-
-// default
-gulp.task('default', opt.default);
+const build = gulp.series(fserve,serve,gulp.parallel(styles,scripts));
+export default build;
