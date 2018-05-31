@@ -1,7 +1,7 @@
 {
   "name": "template",
   "version": "1.0.0",
-  "description": "- babel + ES6 - sass - images - fractal",
+  "description": "- babel + ES6 - sass(autoprefixer,min) - images - fractal",
   "main": "gulpfile.babel.js",
   "dependencies": {
     "del": "^3.0.0",

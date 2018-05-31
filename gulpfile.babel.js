@@ -45,8 +45,8 @@ const paths = {
     dest: 'dist_img'
   },
   fractal: {
-    dest: 'dist_lib',
     port: 4000,
+    dest: 'dist_lib'
   }
 }
 
@@ -58,8 +58,7 @@ export function styles() {
   .pipe(sass({precision:10 , outputStyle:'expanded'}).on('error',sass.logError))
   .pipe(autoprefixer({browsers:autoprefixer.browsers,cascade: false}))
   .pipe(cleanCSS())
-  .pipe(gulp.dest(paths.styles.dest))
-  .pipe(browserSync.reload({stream:true}));
+  .pipe(gulp.dest(paths.styles.dest));
 }
 
 
@@ -71,15 +70,7 @@ export function scripts() {
       path.basename = path.basename.replace('.es','')
     ))
     .pipe(uglify())
-    .pipe(gulp.dest(paths.scripts.dest))
-    .pipe(browserSync.reload({stream:true}));
-}
-
-
-// docs
-function docs() {
-  return gulp.src(paths.docs.src,{since: gulp.lastRun(docs)})
-    .pipe(browserSync.reload({stream:true}));
+    .pipe(gulp.dest(paths.scripts.dest));
 }
 
 
@@ -108,7 +99,7 @@ export function images() {
 function writeFile(path,data) {
   fs.access(path, function(err) {
     if (err) {
-      return fs.writeFile(path,data,(error) => {console.log('Error!')});
+      return fs.writeFile(path,data,(error) => {console.log('Create .image-cache')});
     }
   });
 }
@@ -141,10 +132,13 @@ export function fbuild() {
 
 // serve
 const serve = () => {
-  browserSync.init({proxy: paths.url});
+  browserSync.init({
+    proxy: paths.url,
+    open: 'external',
+    files: [paths.scripts.src,paths.styles.src,paths.docs.src]
+  });
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.scripts.src, scripts);
-  gulp.watch(paths.docs.src, docs);
 }
 
 

@@ -21,5 +21,5 @@ class Cat {
   }
 }
 
-var cat1 = new Cat('タマ！！！です。。');
+var cat1 = new Cat('タマ！です。。');
 cat1.walk();

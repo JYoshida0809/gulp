@@ -2,7 +2,7 @@
 
 - browserSync
 - babel + ES6
-- sass
+- sass(autoprefixer,min)
 - images
 - fractal
 
