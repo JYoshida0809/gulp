@@ -1,4 +1,10 @@
-/** gulp **/
+/** Gulp
+ * - browserSync
+ * - sass
+ * - babel + ES6
+ * - images
+ * - fractal
+ */
 
 import gulp from 'gulp';
 import babel from 'gulp-babel';
