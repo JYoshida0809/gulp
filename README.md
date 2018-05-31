@@ -18,7 +18,6 @@
 
 ## memo
 
-- 20171024 : 圧縮した画像ファイルをキャッシュし、複数回圧縮が実行されない様に変更
 - 20180531 : gulp ver4.0.0対応、タスクの整理、plugin変更
 
 (1)`.babelrc`/`gulpfile.babel.js`/`package.json`/`fractal_src`を対象ディレクトリにコピー
