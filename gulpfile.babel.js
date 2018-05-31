@@ -52,7 +52,7 @@ const paths = {
 
 
 // styles
-function styles() {
+export function styles() {
   return gulp.src(paths.styles.src,{base: 'src',since: gulp.lastRun(styles)})
   .pipe(progeny())
   .pipe(sass({precision:10 , outputStyle:'expanded'}).on('error',sass.logError))
@@ -64,7 +64,7 @@ function styles() {
 
 
 // scripts
-function scripts() {
+export function scripts() {
   return gulp.src(paths.scripts.src,{base: 'src',since: gulp.lastRun(scripts)})
     .pipe(babel())
     .pipe(rename( (path) =>

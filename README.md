@@ -10,11 +10,10 @@
 ## tasks
 
 - `gulp` : 起動
-- `gulp sass` : SCSSコンパイル
-- `gulp js` : ES6 → ES5にトランスコンパイル
-- `gulp image` : 画像圧縮
-- `gulp copy` : ルートと同階層に納品ファイル作成
-- `gulp fractal:build` : コンポーネントライブラリの静的ページ作成
+- `gulp styles` : SCSS → CSS
+- `gulp scripts` : ES6 → ES5
+- `gulp images` : 画像圧縮
+- `gulp fbuild` : コンポーネントライブラリを静的書き出し
 
 
 ## memo
