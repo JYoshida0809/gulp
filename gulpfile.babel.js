@@ -76,6 +76,13 @@ export function scripts() {
 }
 
 
+// docs
+export function docs() {
+  return gulp.src(paths.docs.src,{since: gulp.lastRun(docs)})
+    .pipe(browserSync.reload({stream: true}));
+}
+
+
 // images
 export function images() {
   writeFile('.image-cache','');
@@ -136,11 +143,11 @@ export function fbuild() {
 const serve = () => {
   browserSync.init({
     proxy: paths.url,
-    open: 'external',
-    //files: [paths.scripts.src,paths.styles.src,paths.docs.src]
+    open: 'external'
   });
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.scripts.src, scripts);
+  gulp.watch(paths.docs.src, docs);
 }
 
 
