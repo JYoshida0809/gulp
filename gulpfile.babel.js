@@ -58,7 +58,8 @@ export function styles() {
   .pipe(sass({precision:10 , outputStyle:'expanded'}).on('error',sass.logError))
   .pipe(autoprefixer({browsers:autoprefixer.browsers,cascade: false}))
   .pipe(cleanCSS())
-  .pipe(gulp.dest(paths.styles.dest));
+  .pipe(gulp.dest(paths.styles.dest))
+  .pipe(browserSync.reload({stream: true}));
 }
 
 
@@ -70,7 +71,8 @@ export function scripts() {
       path.basename = path.basename.replace('.es','')
     ))
     .pipe(uglify())
-    .pipe(gulp.dest(paths.scripts.dest));
+    .pipe(gulp.dest(paths.scripts.dest))
+    .pipe(browserSync.reload({stream: true}));
 }
 
 
@@ -135,13 +137,13 @@ const serve = () => {
   browserSync.init({
     proxy: paths.url,
     open: 'external',
-    files: [paths.scripts.src,paths.styles.src,paths.docs.src]
+    //files: [paths.scripts.src,paths.styles.src,paths.docs.src]
   });
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.scripts.src, scripts);
 }
 
 
-// build
-const build = gulp.series(fserve,serve,gulp.parallel(styles,scripts));
+// build（fserveは使用時に追加）
+const build = gulp.series(serve,gulp.parallel(styles,scripts));
 export default build;
