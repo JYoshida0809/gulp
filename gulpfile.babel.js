@@ -40,7 +40,7 @@ const paths = {
     src: settings.ROOT + '**/*.+(php|html)'
   },
   img: {
-    src: settings.ROOT + '**/*.+(jpg|png|gif|svg)',
+    src: settings.ROOT + '**/*.+(jpg|png|gif)',
     cache: './.image-cache',
     dest: 'dist_img'
   },
