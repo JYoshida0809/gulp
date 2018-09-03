@@ -10,6 +10,7 @@ import gulp from 'gulp';
 import babel from 'gulp-babel';
 import browserSync from 'browser-sync';
 import sass from 'gulp-sass';
+import cache from 'gulp-cached';
 import cleanCSS from 'gulp-clean-css';
 import autoprefixer from 'gulp-autoprefixer';
 import progeny from 'gulp-progeny';
@@ -54,6 +55,7 @@ const paths = {
 // styles
 export function styles() {
   return gulp.src(paths.styles.src,{base: 'src',since: gulp.lastRun(styles)})
+  .pipe(cache('styles'))
   .pipe(progeny())
   .pipe(sass({precision:10 , outputStyle:'expanded'}).on('error',sass.logError))
   .pipe(autoprefixer({browsers:autoprefixer.browsers,cascade: false}))
@@ -66,6 +68,7 @@ export function styles() {
 // scripts
 export function scripts() {
   return gulp.src(paths.scripts.src,{base: 'src',since: gulp.lastRun(scripts)})
+    .pipe(cache('scripts'))
     .pipe(babel())
     .pipe(rename( (path) =>
       path.basename = path.basename.replace('.es','')
@@ -79,6 +82,7 @@ export function scripts() {
 // docs
 export function docs() {
   return gulp.src(paths.docs.src,{since: gulp.lastRun(docs)})
+    .pipe(cache('docs'))
     .pipe(browserSync.reload({stream: true}));
 }
 
@@ -137,6 +141,12 @@ export function fbuild() {
     fractalLogger.success('Fractal build completed!');
   });
 }
+
+
+// cache(init)
+gulp.src('**/*.scss',{base: 'src'}).pipe(cache('styles')).pipe(progeny());
+gulp.src('**/*.es.js',{base: 'src'}).pipe(cache('scripts'));
+gulp.src('**/*.+(php|html)',{base: 'src'}).pipe(cache('docs'));
 
 
 // serve
