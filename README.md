@@ -18,6 +18,7 @@
 
 ## memo
 
+- 20180903 : init時にCacheを有効に
 - 20180531 : gulp ver4.0.0対応、タスクの整理、plugin変更
 
 (1)`.babelrc`/`gulpfile.babel.js`/`package.json`/`fractal_src`を対象ディレクトリにコピー
