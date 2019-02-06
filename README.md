@@ -2,30 +2,24 @@
 
 - browserSync
 - babel + ES6
-- sass(autoprefixer,min)
+- sass
 - images
-- fractal
 
 
 ## tasks
 
-- `gulp` : 起動
-- `gulp styles` : SCSS → CSS
-- `gulp scripts` : ES6 → ES5
-- `gulp images` : 画像圧縮
-- `gulp fbuild` : コンポーネントライブラリを静的書き出し
+- `npm run gulp` : 起動
 
 
 ## memo
 
-- 20180903 : init時にCacheを有効に
-- 20180531 : gulp ver4.0.0対応、タスクの整理、plugin変更
+- 20190206 : 最低限の機能、シンプルな構造に変更
 
-(1)`.babelrc`/`gulpfile.babel.js`/`package.json`/`fractal_src`を対象ディレクトリにコピー
+(1)`gulpfile.babel.js`/`package.json`を対象ディレクトリにコピー
 
 (2) プラグインをインストール（package.jsonから一括）
 ```
-npm install
+npm i
 ```
 
 ★更新を確認
@@ -33,4 +27,4 @@ npm install
 npm update
 ```
 
-(3) `gulpfile.babel.js`内のルートパス・設定を変更
+(3) `gulpfile.babel.js`内の設定を変更

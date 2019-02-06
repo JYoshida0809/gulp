@@ -3,7 +3,6 @@
  * - sass
  * - babel + ES6
  * - images
- * - fractal
  */
 
 import gulp from 'gulp';
@@ -21,6 +20,7 @@ import assetCache from 'gulp-asset-cache';
 import fs from 'fs';
 
 const settings = {
+  URL: 'http://gulp.example.test/',
   ROOT: './www/',
   autoprefixer: {
     browsers : ["> 2%","last 2 version"]
@@ -28,7 +28,6 @@ const settings = {
 }
 
 const paths = {
-  url : 'http://gulp.test/',
   styles: {
     src: settings.ROOT + '**/*.scss',
     dest: 'dist'
@@ -44,10 +43,6 @@ const paths = {
     src: settings.ROOT + '**/*.+(jpg|png|gif)',
     cache: './.image-cache',
     dest: 'dist_img'
-  },
-  fractal: {
-    port: 4000,
-    dest: 'dist_lib'
   }
 }
 
@@ -118,41 +113,16 @@ function writeFile(path,data) {
 }
 
 
-// fractal
-const fractal = require('@frctl/fractal').create();
-fractal.set('project.title', 'Component Library');
-fractal.web.set('static.path', __dirname + '/www');
-fractal.web.set('builder.dest', paths.fractal.dest);
-fractal.web.set('server.port', paths.fractal.port);
-fractal.docs.set('path', __dirname + '/fractal_src/docs');
-fractal.components.set('path', __dirname + '/fractal_src/components');
-
-function fserve() {
-  const fractalServer = fractal.web.server({sync: true});
-  return fractalServer.start();
-}
-
-export function fbuild() {
-  const fractalLogger = fractal.cli.console;
-  const builder = fractal.web.builder();
-  builder.on('progress', (completed, total) => fractalLogger.update(`Exported ${completed} of ${total} items`, 'info'));
-  builder.on('error', err => fractalLogger.error(err.message));
-  return builder.build().then(() => {
-    fractalLogger.success('Fractal build completed!');
-  });
-}
-
-
 // cache(init)
-gulp.src('**/*.scss',{base: 'src'}).pipe(cache('styles')).pipe(progeny());
-gulp.src('**/*.es.js',{base: 'src'}).pipe(cache('scripts'));
-gulp.src('**/*.+(php|html)',{base: 'src'}).pipe(cache('docs'));
+// gulp.src('**/*.scss',{base: 'src'}).pipe(cache('styles')).pipe(progeny());
+// gulp.src('**/*.es.js',{base: 'src'}).pipe(cache('scripts'));
+// gulp.src('**/*.+(php|html)',{base: 'src'}).pipe(cache('docs'));
 
 
 // serve
 const serve = () => {
   browserSync.init({
-    proxy: paths.url,
+    proxy: settings.URL,
     open: 'external'
   });
   gulp.watch(paths.styles.src, styles);
@@ -161,6 +131,6 @@ const serve = () => {
 }
 
 
-// build（fserveは使用時に追加）
+// build
 const build = gulp.series(serve,gulp.parallel(styles,scripts));
 export default build;

@@ -1,42 +1,39 @@
 {
-  "name": "template",
-  "version": "1.0.0",
-  "description": "- babel + ES6 - sass(autoprefixer,min) - images - fractal",
-  "main": "gulpfile.babel.js",
-  "dependencies": {
-    "del": "^3.0.0",
-    "gulp-clean-css": "^3.10.0",
-    "gulp-uglify": "^3.0.1"
+  "babel": {
+    "presets": [
+      "env"
+    ]
   },
-  "devDependencies": {
-    "@frctl/fractal": "^1.1.5",
-    "babel-core": "^6.26.0",
+  "name": "GulpTask",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "@babel/core": "^7.2.2",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
     "browser-sync": "^2.24.7",
     "gulp": "^4.0.0",
     "gulp-asset-cache": "^1.1.5",
-    "gulp-autoprefixer": "^4.1.0",
-    "gulp-babel": "^7.0.0",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-babel": "^8.0.0",
     "gulp-cached": "^1.1.1",
+    "gulp-clean-css": "^4.0.0",
     "gulp-image": "^4.2.0",
     "gulp-progeny": "^0.4.0",
     "gulp-rename": "^1.4.0",
-    "gulp-replace": "^0.6.1",
-    "gulp-sass": "^3.1.0"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JYoshida0809/gulp.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "J.Yoshida",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/JYoshida0809/gulp/issues"
   },
-  "homepage": "https://github.com/JYoshida0809/gulp#readme"
+  "scripts": {
+    "gulp": "gulp"
+  }
 }
