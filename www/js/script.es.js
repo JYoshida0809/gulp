@@ -17,9 +17,10 @@ class Cat {
     return this._name;
   }
   walk() {
-    console.log(this._name + 'が歩いてますね！！！');
+    console.log(this._name + 'が歩いてますね！！');
   }
 }
 
-var cat1 = new Cat('タマ！です。！！！！');
+
+var cat1 = new Cat('タマ！です。');
 cat1.walk();

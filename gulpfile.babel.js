@@ -22,6 +22,7 @@ import fs from 'fs';
 
 const settings = {
   ROOT: './www/',
+  PHP: '5.6.32',
   autoprefixer: {
     browsers : ["> 2%","last 2 version"]
   }
@@ -115,8 +116,8 @@ const serve = () => {
   connect.server({
     port: 3001,
     base:'www',
-    //bin: '/Applications/MAMP/bin/php/php5.6.32/bin/php',
-    //ini: '/Applications/MAMP/bin/php/php5.6.32/conf/php.ini'
+    //bin: `/Applications/MAMP/bin/php/php${settings.PHP}/bin/php`,
+    //ini: `/Applications/MAMP/bin/php/php${settings.PHP}/conf/php.ini`
   }, () => {
     browserSync.init({
       proxy: 'localhost:3001',

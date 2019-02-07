@@ -1,21 +1,25 @@
 {
   "babel": {
     "presets": [
-      "env"
+      "@babel/preset-env"
     ]
   },
   "name": "GulpTask",
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.6.1",
-    "babel-register": "^6.26.0",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.0.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-loader": "^8.0.5",
     "browser-sync": "^2.24.7",
     "gulp": "^4.0.0",
     "gulp-asset-cache": "^1.1.5",
     "gulp-autoprefixer": "^6.0.0",
-    "gulp-babel": "^7.0.0",
+    "gulp-babel": "8.0.0-beta.2",
     "gulp-cached": "^1.1.1",
     "gulp-clean-css": "^4.0.0",
     "gulp-connect-php": "^1.0.3",
