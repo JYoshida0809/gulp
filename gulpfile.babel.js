@@ -7,6 +7,7 @@
 
 import gulp from 'gulp';
 import babel from 'gulp-babel';
+import connect from 'gulp-connect-php';
 import browserSync from 'browser-sync';
 import sass from 'gulp-sass';
 import cache from 'gulp-cached';
@@ -20,7 +21,6 @@ import assetCache from 'gulp-asset-cache';
 import fs from 'fs';
 
 const settings = {
-  URL: 'http://gulp.example.test/',
   ROOT: './www/',
   autoprefixer: {
     browsers : ["> 2%","last 2 version"]
@@ -50,7 +50,6 @@ const paths = {
 // styles
 export function styles() {
   return gulp.src(paths.styles.src,{base: 'src',since: gulp.lastRun(styles)})
-  .pipe(cache('styles'))
   .pipe(progeny())
   .pipe(sass({precision:10 , outputStyle:'expanded'}).on('error',sass.logError))
   .pipe(autoprefixer({browsers:autoprefixer.browsers,cascade: false}))
@@ -63,7 +62,6 @@ export function styles() {
 // scripts
 export function scripts() {
   return gulp.src(paths.scripts.src,{base: 'src',since: gulp.lastRun(scripts)})
-    .pipe(cache('scripts'))
     .pipe(babel())
     .pipe(rename( (path) =>
       path.basename = path.basename.replace('.es','')
@@ -77,7 +75,6 @@ export function scripts() {
 // docs
 export function docs() {
   return gulp.src(paths.docs.src,{since: gulp.lastRun(docs)})
-    .pipe(cache('docs'))
     .pipe(browserSync.reload({stream: true}));
 }
 
@@ -113,24 +110,26 @@ function writeFile(path,data) {
 }
 
 
-// cache(init)
-// gulp.src('**/*.scss',{base: 'src'}).pipe(cache('styles')).pipe(progeny());
-// gulp.src('**/*.es.js',{base: 'src'}).pipe(cache('scripts'));
-// gulp.src('**/*.+(php|html)',{base: 'src'}).pipe(cache('docs'));
-
-
 // serve
 const serve = () => {
-  browserSync.init({
-    proxy: settings.URL,
-    open: 'external'
+  connect.server({
+    port: 3001,
+    base:'www',
+    //bin: '/Applications/MAMP/bin/php/php5.6.32/bin/php',
+    //ini: '/Applications/MAMP/bin/php/php5.6.32/conf/php.ini'
+  }, () => {
+    browserSync.init({
+      proxy: 'localhost:3001',
+      open: 'external',
+      logSnippet: false
+    });
   });
+
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.scripts.src, scripts);
   gulp.watch(paths.docs.src, docs);
 }
 
 
-// build
-const build = gulp.series(serve,gulp.parallel(styles,scripts));
-export default build;
+// default
+export default serve;
