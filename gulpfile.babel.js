@@ -22,7 +22,7 @@ import fs from 'fs';
 
 const settings = {
   ROOT: './www/',
-  PHP: '5.6.32',
+  //PHP: '5.6.32',
   autoprefixer: {
     browsers : ["> 2%","last 2 version"]
   }
@@ -115,14 +115,16 @@ function writeFile(path,data) {
 const serve = () => {
   connect.server({
     port: 3001,
-    base:'www',
+    base: 'www',
+    stdio: 'ignore',
     //bin: `/Applications/MAMP/bin/php/php${settings.PHP}/bin/php`,
     //ini: `/Applications/MAMP/bin/php/php${settings.PHP}/conf/php.ini`
   }, () => {
     browserSync.init({
-      proxy: 'localhost:3001',
+      proxy: '127.0.0.1:3001',
       open: 'external',
-      logSnippet: false
+      logSnippet: false,
+      notify: false
     });
   });
 

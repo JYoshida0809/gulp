@@ -17,8 +17,8 @@
       <p>テスト</p>
       <h4>h4タイトル</h4>
       <p>テスト</p>
-      <h5>h5タイトルh5タイトルh5タイトル</h5>
-      <p>テストテストテスト</p>
+      <h5>h5タイトル</h5>
+      <p>テストテストテストテストテストテストテストテスト</p>
     </div>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="js/script.js"></script>
