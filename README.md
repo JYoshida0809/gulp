@@ -8,16 +8,17 @@
 
 ## tasks
 
-- `npm run gulp` : 起動
+- `npm run gulp` or `npx gulp` : 起動（ローカル）
 
 
 ## memo
 
 - 20190206 : 最低限の機能、シンプルな構造に変更
 
+
 (1)`gulpfile.babel.js`/`package.json`を対象ディレクトリにコピー
 
-(2) プラグインをインストール（package.jsonから一括）
+(2) インストール
 ```
 npm i
 ```
@@ -27,4 +28,4 @@ npm i
 npm update
 ```
 
-(3) `gulpfile.babel.js`内の設定を変更
+(3) 必要があれば、`gulpfile.babel.js`内の設定を変更
