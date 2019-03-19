@@ -53,7 +53,7 @@ export function styles() {
   return gulp.src(paths.styles.src,{base: 'src',since: gulp.lastRun(styles)})
   .pipe(progeny())
   .pipe(sass({precision:10 , outputStyle:'expanded'}).on('error',sass.logError))
-  .pipe(autoprefixer({browsers:settings.autoprefixer.browsers,cascade: false}))
+  .pipe(autoprefixer({browsers: settings.autoprefixer.browsers, cascade: false, grid: true}))
   .pipe(cleanCSS())
   .pipe(gulp.dest(paths.styles.dest))
   .pipe(browserSync.reload({stream: true}));
