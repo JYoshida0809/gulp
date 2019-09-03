@@ -58,7 +58,7 @@ export function styles() {
     .pipe(
       autoprefixer({
         cascade: false,
-        grid: true
+        grid: "autoplace"
       })
     )
     .pipe(cleanCSS())
