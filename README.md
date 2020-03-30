@@ -14,6 +14,9 @@
 ## memo
 
 - 20190206 : 最低限の機能、シンプルな構造に変更
+- 20200330 : プチバージョンUP
+
+（SPECIAL THANKS：inumoarukeba-a）
 
 
 (1)`gulpfile.babel.js`/`package.json`を対象ディレクトリにコピー
@@ -23,7 +26,8 @@
 npm i
 ```
 
-★更新を確認
+or （最新版をインストール）
+
 ```
 npm update
 ```
