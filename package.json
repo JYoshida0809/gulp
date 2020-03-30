@@ -15,30 +15,30 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.5",
-    "@babel/polyfill": "^7.4.4",
-    "@babel/preset-env": "^7.4.5",
-    "@babel/register": "^7.4.4",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/register": "^7.9.0",
     "babel-core": "7.0.0-bridge.0",
-    "babel-loader": "^8.0.6",
-    "browser-sync": "^2.26.5",
+    "babel-loader": "^8.1.0",
+    "browser-sync": "^2.26.7",
     "gulp": "^4.0.2",
     "gulp-asset-cache": "^1.1.5",
-    "gulp-autoprefixer": "^6.1.0",
+    "gulp-autoprefixer": "^7.0.1",
     "gulp-babel": "8.0.0",
     "gulp-cached": "^1.1.1",
-    "gulp-clean-css": "^4.2.0",
+    "gulp-clean-css": "^4.3.0",
     "gulp-connect-php": "^1.0.3",
-    "gulp-image": "^5.0.0",
+    "gulp-image": "^6.1.0",
     "gulp-progeny": "^0.4.1",
-    "gulp-rename": "^1.4.0",
+    "gulp-rename": "^2.0.0",
     "gulp-sass": "^4.0.2",
     "gulp-uglify": "^3.0.2"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JYoshida0809/gulp.git"
+    "url": "git+https://github.com/JYoshida0809/gulp"
   },
   "author": "J.Yoshida",
   "license": "MIT",
@@ -48,8 +48,12 @@
   "scripts": {
     "gulp": "gulp"
   },
-  "browserslist": [
-    "last 2 version",
-    "> 2%"
-  ]
+  "browserslist": {
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version",
+      "last 1 ie version"
+    ]
+  }
 }
