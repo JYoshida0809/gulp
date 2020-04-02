@@ -94,15 +94,15 @@ export function images() {
     .pipe(
       image({
         pngquant: true,
-        optipng: true,
+        optipng: false,
         zopflipng: false,
         jpegRecompress: false,
-        jpegoptim: false,
-        mozjpeg: false,
-        guetzli: true,
+        mozjpeg: true,
+        guetzli: false,
         gifsicle: true,
-        svgo: true,
-        concurrent: 10
+        svgo: false,
+        concurrent: 10,
+        quiet: true
       })
     )
     .pipe(gulp.dest(paths.img.dest))
